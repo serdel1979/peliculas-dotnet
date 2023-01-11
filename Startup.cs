@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 namespace PeliculasApi
@@ -17,7 +18,9 @@ namespace PeliculasApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddEndpointsApiExplorer();
+            services.AddDbContext<ApplicationDBContext>(option=>option.UseNpgsql(
+                Configuration.GetConnectionString("connectionString"))
+           );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
